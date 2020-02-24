@@ -21,6 +21,10 @@ const DatabaseApiService = {
   },
   searchGeniusByArtist(input) {
     return geniusArtistSearchResults;
+  },
+  postToDb(inputArray) {
+    alert(`Mock post: ${inputArray}`)
+    console.log(inputArray)
   }
 }
 

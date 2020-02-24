@@ -16,13 +16,20 @@ class AddPage extends Component {
         <td>
           <input
             type="checkbox"
-            value={item.geniusId}
-            checked={this.context.checkboxState.checked}
+            id={item.geniusId}
+            checked={this.context.checkboxState[item.geniusId].checked}
             onChange={this.handleCheckboxChange}>
           </input></td>
-        <td><a href={item.url}>{item.title}</a></td>
+        <td><a href={item.url} target="_blank">{item.title}</a></td>
         <td>{item.artist}</td>
-        <td></td>
+        <td>
+          <input
+            type="text"
+            id={item.geniusId}
+            value={this.context.checkboxState[item.geniusId].theme}
+            onChange={this.handleTextChange}
+            disabled={!this.context.checkboxState[item.geniusId].checked}>
+          </input></td>
       </tr>)
   }
 
@@ -33,21 +40,44 @@ class AddPage extends Component {
   }
 
   handleCheckboxChange = (event) => {
-    //let newState = this.context.checkboxState[event.target.value]
-    //newState.checked = event.target.checked
-
-
     let checkboxState = this.context.checkboxState
-    checkboxState[event.target.value].checked = event.target.checked
+    checkboxState[event.target.id].checked = event.target.checked
+    this.context.setCheckboxState(checkboxState)
+  }
+
+  handleTextChange = (event) => {
+    let checkboxState = this.context.checkboxState
+    //console.log(checkboxState)
+    checkboxState[event.target.id].theme = event.target.value
     this.context.setCheckboxState(checkboxState)
   }
 
   handleSubmitSearch = (event) => {
     event.preventDefault()
     let searchParam = event.target.searchDB.value
+    console.log(searchParam)
     let results = DatabaseApiService.searchGeniusBySearch(searchParam)
+    this.context.setCheckboxState(this.context.createCheckboxState(results))
+    this.context.setAddPageResults(results) //set state
+  }
+
+  handleArtistSearch = (event) => {
+    event.preventDefault()
+    this.context.checkboxState = {}
+    let artist = event.target.artists.value
+    let results = DatabaseApiService.searchGeniusByArtist(artist)
     this.context.setAddPageResults(results) //set state
     this.context.setCheckboxState(this.context.createCheckboxState(results))
+  }
+
+  handleSubmitToPost = () => {
+    //console.log(this.context.addPageResults)
+    const checkboxState = this.context.checkboxState
+    const output = this.context.addPageResults.filter(function (result) {
+      return checkboxState[result.geniusId].checked === true
+    });
+    DatabaseApiService.postToDb(output);
+
   }
 
   render() {
@@ -58,7 +88,7 @@ class AddPage extends Component {
           <input type="text" id="searchDB" name="searchDB"></input>
           <input type="submit"></input>
         </form>
-        <form>
+        <form onSubmit={this.handleArtistSearch}>
           <label htmlFor="artists">Or, choose an artist:</label>
           <select id="artists" name="artists">
             {this.context.artists.map(this.createArtistSelect)}
@@ -66,19 +96,23 @@ class AddPage extends Component {
           <input type="submit"></input>
         </form>
 
-        <table>
-          <tbody>
-            {this.context.addPageResults.length > 0 && (
-              <tr>
-                <th></th>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Labels</th>
-              </tr>
-            )}
-            {this.context.addPageResults.map(this.createAddTableRow)}
-          </tbody>
-        </table>
+        {this.context.addPageResults.length > 0 && (
+          <>
+            <button onClick={this.handleSubmitToPost}>Add to Database</button>
+            <table>
+              <tbody>
+
+                <tr>
+                  <th></th>
+                  <th>Title</th>
+                  <th>Artist</th>
+                  <th>Labels</th>
+                </tr>
+                {this.context.addPageResults.map(this.createAddTableRow)}
+              </tbody>
+            </table>
+          </>
+        )}
       </>
     );
   }

@@ -9,7 +9,7 @@ class SearchPage extends Component {
   createTableRow = (item, index) => {
     return (
       <tr key={index}>
-        <td><a href={item.url}>{item.title}</a></td>
+        <td><a href={item.url} target="_blank">{item.title}</a></td>
         <td>{item.artist}</td>
       </tr>)
   }

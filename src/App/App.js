@@ -3,7 +3,7 @@ import SearchPage from '../SearchPage/SearchPage.js'
 import AddPage from '../AddPage/AddPage.js'
 import { Route, Link } from 'react-router-dom';
 import Context from '../ContextManagement/Context.js'
-import { removeTypeDuplicates } from '@babel/types';
+//import { removeTypeDuplicates } from '@babel/types';
 
 class App extends Component {
 
@@ -24,13 +24,12 @@ class App extends Component {
   }
 
   createCheckboxState = results => {
-
     let checkboxState = {}
     results.forEach(function (result) {
       let id = result.geniusId
       checkboxState[id] = {
         "checked": false,
-        "theme": null,
+        "theme": "",
       }
     });
     return checkboxState
