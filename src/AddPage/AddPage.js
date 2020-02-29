@@ -47,7 +47,6 @@ class AddPage extends Component {
 
   handleTextChange = (event) => {
     let checkboxState = this.context.checkboxState
-    //console.log(checkboxState)
     checkboxState[event.target.id].theme = event.target.value
     this.context.setCheckboxState(checkboxState)
   }
@@ -55,7 +54,6 @@ class AddPage extends Component {
   handleSubmitSearch = (event) => {
     event.preventDefault()
     let searchParam = event.target.searchDB.value
-    console.log(searchParam)
     let results = DatabaseApiService.searchGeniusBySearch(searchParam)
     this.context.setCheckboxState(this.context.createCheckboxState(results))
     this.context.setAddPageResults(results) //set state
@@ -71,7 +69,6 @@ class AddPage extends Component {
   }
 
   handleSubmitToPost = () => {
-    //console.log(this.context.addPageResults)
     const checkboxState = this.context.checkboxState
     const output = this.context.addPageResults.filter(function (result) {
       return checkboxState[result.geniusId].checked === true

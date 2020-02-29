@@ -17,7 +17,11 @@ class SearchPage extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
     let searchParam = event.target.searchDB.value
-    this.context.setSearchPageResults(DatabaseApiService.getSongsFromDatabase()) //set state
+    console.log("handle submit")
+    DatabaseApiService.getSongsFromDatabase(searchParam)
+      .then(this.context.setSearchPageResults)
+    //console.log(results)
+    //this.context.setSearchPageResults(results) //set state
   }
 
   render() {
