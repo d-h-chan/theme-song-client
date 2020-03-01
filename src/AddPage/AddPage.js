@@ -7,7 +7,8 @@ class AddPage extends Component {
   static contextType = Context;
 
   componentDidMount() {
-    this.context.setArtists(DatabaseApiService.getArtistsFromDatabase())
+    DatabaseApiService.getArtistsFromDatabase()
+      .then(this.context.setArtists)
   }
 
   createAddTableRow = (item, index) => {
@@ -54,18 +55,30 @@ class AddPage extends Component {
   handleSubmitSearch = (event) => {
     event.preventDefault()
     let searchParam = event.target.searchDB.value
-    let results = DatabaseApiService.searchGeniusBySearch(searchParam)
-    this.context.setCheckboxState(this.context.createCheckboxState(results))
-    this.context.setAddPageResults(results) //set state
+    this.context.setCheckboxState({})
+    this.context.setAddPageResults([]) //set state
+    DatabaseApiService.searchGeniusBySearch(searchParam)
+      .then(results => {
+        this.handleSearch(results)
+      })
+
   }
 
   handleArtistSearch = (event) => {
     event.preventDefault()
     this.context.checkboxState = {}
     let artist = event.target.artists.value
-    let results = DatabaseApiService.searchGeniusByArtist(artist)
-    this.context.setAddPageResults(results) //set state
+    this.context.setCheckboxState({})
+    this.context.setAddPageResults([]) //set state
+    DatabaseApiService.searchGeniusByArtist(artist)
+      .then(results => {
+        this.handleSearch(results)
+      })
+  }
+
+  handleSearch = (results) => {
     this.context.setCheckboxState(this.context.createCheckboxState(results))
+    this.context.setAddPageResults(results) //set state
   }
 
   handleSubmitToPost = () => {
