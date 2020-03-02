@@ -86,7 +86,17 @@ class AddPage extends Component {
     const output = this.context.addPageResults.filter(function (result) {
       return checkboxState[result.geniusId].checked === true
     });
-    DatabaseApiService.postToDb(output);
+    if (Array.isArray(output) && output.length) {
+      DatabaseApiService.postToDb(output)
+        .then(res => {
+          DatabaseApiService.getArtistsFromDatabase()
+            .then(this.context.setArtists)
+          alert(res)
+        });
+    }
+    else {
+      alert("no boxes were checked!")
+    }
 
   }
 

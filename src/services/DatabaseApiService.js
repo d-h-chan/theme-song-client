@@ -1,6 +1,4 @@
-//import config from '../config'
 import config from '../config'
-import {geniusSearchResults, geniusArtistSearchResults, artistList}from '../store.js'
 
 const DatabaseApiService = {
   getSongsFromDatabase(input) {
@@ -22,7 +20,6 @@ const DatabaseApiService = {
           ? res.json().then(e => Promise.reject(e))
           : res.json()
       )
-    //return artistList;
   },
   searchGeniusBySearch(input) {
     return fetch(`${config.API_ENDPOINT}/genius/search?q=${encodeURI(input)}`, {
@@ -43,11 +40,20 @@ const DatabaseApiService = {
           ? res.json().then(e => Promise.reject(e))
           : res.json()
       )
-    return geniusArtistSearchResults;
   },
   postToDb(inputArray) {
-    alert(`Mock post: ${inputArray}`)
-    console.log(inputArray)
+    return fetch(`${config.API_ENDPOINT}/database/songs`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(inputArray),
+    })
+      .then(res =>
+        (!res.ok)
+          ? res.json().then(e => Promise.reject(e))
+          : res.json()
+      )
   }
 }
 
