@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Context from '../ContextManagement/Context.js'
 import DatabaseApiService from '../services/DatabaseApiService'
+import LoadingIndicator from '../LoadingIndicator/LoadingIndicator'
 
 class SearchPage extends Component {
 
@@ -11,14 +12,20 @@ class SearchPage extends Component {
       <tr key={index}>
         <td><a href={item.url} target="_blank">{item.title}</a></td>
         <td>{item.artist}</td>
+        <td>{item.themes}</td>
       </tr>)
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
     let searchParam = event.target.searchDB.value
+    this.context.setSearchPageResults([])
+    this.context.setIsLoading(true)
     DatabaseApiService.getSongsFromDatabase(searchParam)
-      .then(this.context.setSearchPageResults)
+      .then(res => {
+        this.context.setIsLoading(false)
+        this.context.setSearchPageResults(res)
+      })
   }
 
   render() {
@@ -36,11 +43,13 @@ class SearchPage extends Component {
               <tr>
               <th>Title</th>
               <th>Artist</th>
+              <th>Labels</th>
             </tr>
             )}
             {this.context.searchPageResults.map(this.createTableRow)}
           </tbody>
         </table>
+        <LoadingIndicator></LoadingIndicator>
       </>
     );
   }

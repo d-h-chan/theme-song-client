@@ -7,6 +7,7 @@ const Context = React.createContext({
   setArtists: () => {},
   setCheckboxState: () => {},
   createCheckboxState: () => {},
+  setIsLoading: () => {}
 });
 
 export default Context;

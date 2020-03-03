@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Context from '../ContextManagement/Context.js'
+import LoadingIndicator from '../LoadingIndicator/LoadingIndicator'
 import DatabaseApiService from '../services/DatabaseApiService'
 
 class AddPage extends Component {
@@ -7,8 +8,12 @@ class AddPage extends Component {
   static contextType = Context;
 
   componentDidMount() {
+    this.context.setIsLoading(true)
     DatabaseApiService.getArtistsFromDatabase()
-      .then(this.context.setArtists)
+      .then(res => {
+        this.context.setIsLoading(false)
+        this.context.setArtists(res)
+      })
   }
 
   createAddTableRow = (item, index) => {
@@ -27,7 +32,7 @@ class AddPage extends Component {
           <input
             type="text"
             id={item.geniusId}
-            value={this.context.checkboxState[item.geniusId].theme}
+            value={this.context.checkboxState[item.geniusId].themes}
             onChange={this.handleTextChange}
             disabled={!this.context.checkboxState[item.geniusId].checked}>
           </input></td>
@@ -48,7 +53,7 @@ class AddPage extends Component {
 
   handleTextChange = (event) => {
     let checkboxState = this.context.checkboxState
-    checkboxState[event.target.id].theme = event.target.value
+    checkboxState[event.target.id].themes = event.target.value
     this.context.setCheckboxState(checkboxState)
   }
 
@@ -57,8 +62,10 @@ class AddPage extends Component {
     let searchParam = event.target.searchDB.value
     this.context.setCheckboxState({})
     this.context.setAddPageResults([]) //set state
+    this.context.setIsLoading(true)
     DatabaseApiService.searchGeniusBySearch(searchParam)
       .then(results => {
+        this.context.setIsLoading(false)
         this.handleSearch(results)
       })
 
@@ -70,8 +77,10 @@ class AddPage extends Component {
     let artist = event.target.artists.value
     this.context.setCheckboxState({})
     this.context.setAddPageResults([]) //set state
+    this.context.setIsLoading(true)
     DatabaseApiService.searchGeniusByArtist(artist)
       .then(results => {
+        this.context.setIsLoading(false)
         this.handleSearch(results)
       })
   }
@@ -86,11 +95,17 @@ class AddPage extends Component {
     const output = this.context.addPageResults.filter(function (result) {
       return checkboxState[result.geniusId].checked === true
     });
+    for (const item of output) {
+      item["themes"] = checkboxState[item.geniusId].themes
+    }
+    console.log(output)
     if (Array.isArray(output) && output.length) {
+      this.context.setIsLoading(true)
       DatabaseApiService.postToDb(output)
         .then(res => {
           DatabaseApiService.getArtistsFromDatabase()
             .then(this.context.setArtists)
+          this.context.setIsLoading(false)
           alert(res)
         });
     }
@@ -133,6 +148,7 @@ class AddPage extends Component {
             </table>
           </>
         )}
+        <LoadingIndicator></LoadingIndicator>
       </>
     );
   }

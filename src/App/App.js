@@ -23,13 +23,17 @@ class App extends Component {
     this.setState({ checkboxState })
   }
 
+  setIsLoading = isLoading => {
+    this.setState({isLoading})
+  }
+
   createCheckboxState = results => {
     let checkboxState = {}
     results.forEach(function (result) {
       let id = result.geniusId
       checkboxState[id] = {
         "checked": false,
-        "theme": "",
+        "themes": "",
       }
     });
     return checkboxState
@@ -44,7 +48,9 @@ class App extends Component {
     setArtists: this.setArtists,
     checkboxState: {},
     setCheckboxState: this.setCheckboxState,
-    createCheckboxState: this.createCheckboxState
+    createCheckboxState: this.createCheckboxState,
+    isLoading: false,
+    setIsLoading: this.setIsLoading
   }
 
   render() {
