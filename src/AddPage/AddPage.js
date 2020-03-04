@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Context from '../ContextManagement/Context.js'
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator'
 import DatabaseApiService from '../services/DatabaseApiService'
+import swal from 'sweetalert';
 
 class AddPage extends Component {
 
@@ -43,6 +44,10 @@ class AddPage extends Component {
     return (
       <option key={index} value={item.id}>{item.name}</option>
     )
+  }
+
+  getTitles = (item) => {
+    return item.title
   }
 
   handleCheckboxChange = (event) => {
@@ -98,7 +103,6 @@ class AddPage extends Component {
     for (const item of output) {
       item["themes"] = checkboxState[item.geniusId].themes
     }
-    console.log(output)
     if (Array.isArray(output) && output.length) {
       this.context.setIsLoading(true)
       DatabaseApiService.postToDb(output)
@@ -106,11 +110,12 @@ class AddPage extends Component {
           DatabaseApiService.getArtistsFromDatabase()
             .then(this.context.setArtists)
           this.context.setIsLoading(false)
-          alert(res)
+          let outputTitles = res.map(this.getTitles)
+          swal("Success!", `Saved songs to database: ${outputTitles.join(",")}`, "success");
         });
     }
     else {
-      alert("no boxes were checked!")
+      swal("Warning", "Select at least one song", "warning")
     }
 
   }

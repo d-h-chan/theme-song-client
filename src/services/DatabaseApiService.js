@@ -1,4 +1,5 @@
 import config from '../config'
+import swal from 'sweetalert';
 
 const DatabaseApiService = {
   getSongsFromDatabase(input) {
@@ -7,7 +8,8 @@ const DatabaseApiService = {
     })
       .then(res =>
         (!res.ok)
-          ? res.json().then(e => Promise.reject(e))
+          ? res.json().then(e => {
+            Promise.reject(e)})
           : res.json()
       )
   },
@@ -49,11 +51,18 @@ const DatabaseApiService = {
       },
       body: JSON.stringify(inputArray),
     })
-      .then(res =>
-        (!res.ok)
-          ? res.json().then(e => Promise.reject(e))
-          : res.json()
-      )
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(e => Promise.reject(e))
+        }
+        else if (res.status !== 201){
+          swal("Error", `Post failed: status ${res.status}`, "error")
+          return res.json().then(e => Promise.reject(e))
+        }
+        else {
+          return res.json()
+        }
+      })
   }
 }
 
