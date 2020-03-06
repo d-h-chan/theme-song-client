@@ -1,0 +1,128 @@
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: black;
+  text-align: center;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+h1, h2, th {
+  font-family: 'Montserrat', sans-serif;
+}
+
+h2 {
+  margin-top: 0
+}
+
+nav {
+  background-color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+table{
+  margin: 10px 0;
+}
+
+td {
+  padding: 0;
+}
+
+button, input[type="submit"] {
+  border-radius: 5px;
+  padding: 5px 20px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 10px;
+  transition-duration: 0.4s;
+}
+
+button {
+  background-color: #00B2FF;
+  border: 2px solid #00B2FF;
+  color: white
+}
+
+button:hover {
+  background-color: #006AFF;
+  border: 2px solid #006AFF;
+  color: white
+}
+
+input[type="submit"] {
+  background-color: white;
+  border: 2px solid #00B2FF;
+  color: #00B2FF;
+}
+
+input[type="submit"]:hover {
+  background-color: #00B2FF;
+  border: 2px solid #00B2FF;
+  color: white;
+}
+
+input[type="text"] {
+  font-size: 14px;
+  margin: 0 5px;
+}
+
+input[type="checkbox"] {
+  vertical-align: middle;
+  margin-bottom: 8px;
+}
+
+select {
+  font-size: 14px;
+}
+
+input:disabled {
+  background-color: gainsboro;
+}
+
+
+a:link {
+  font-weight: bold;
+  color: #006AFF;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #006AFF;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #006AFF;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #006AFF;
+  text-decoration: underline;
+}
+
+hr {
+  padding: 0;
+  border: 0;
+  height: 1px;
+  margin: 20px;
+  background-image: linear-gradient(to right, rgba(200, 200, 200, 0), rgba(200, 200, 200, 0.75), rgba(200, 200, 200, 0));
+}
+
+.upperCase {
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+

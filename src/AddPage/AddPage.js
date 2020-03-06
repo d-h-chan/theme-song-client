@@ -9,10 +9,8 @@ class AddPage extends Component {
   static contextType = Context;
 
   componentDidMount() {
-    this.context.setIsLoading(true)
     DatabaseApiService.getArtistsFromDatabase()
       .then(res => {
-        this.context.setIsLoading(false)
         this.context.setArtists(res)
       })
   }
@@ -111,7 +109,7 @@ class AddPage extends Component {
             .then(this.context.setArtists)
           this.context.setIsLoading(false)
           let outputTitles = res.map(this.getTitles)
-          swal("Success!", `Saved songs to database: ${outputTitles.join(",")}`, "success");
+          swal("Success!", `Added songs to database: ${outputTitles.join(",")}`, "success");
         });
     }
     else {
@@ -123,18 +121,20 @@ class AddPage extends Component {
   render() {
     return (
       <>
+      <h2>Add from Genius</h2>
         <form onSubmit={this.handleSubmitSearch}>
-          <label htmlFor="searchDB">Open Search:</label>
-          <input type="text" id="searchDB" name="searchDB"></input>
-          <input type="submit"></input>
+            <label htmlFor="searchDB" className="upperCase">Open Search:</label>
+            <input type="text" id="searchDB" name="searchDB" placeholder="Example: 'Set a Fire'"></input>
+            <input type="submit" value="Search"></input>
         </form>
         <form onSubmit={this.handleArtistSearch}>
-          <label htmlFor="artists">Or, choose an artist:</label>
+          <label htmlFor="artists" className="upperCase">Choose an artist:</label>
           <select id="artists" name="artists">
             {this.context.artists.map(this.createArtistSelect)}
           </select>
-          <input type="submit"></input>
+          <input type="submit" value="Search"></input>
         </form>
+        <hr></hr>
 
         {this.context.addPageResults.length > 0 && (
           <>

@@ -3,7 +3,8 @@ import SearchPage from '../SearchPage/SearchPage.js'
 import AddPage from '../AddPage/AddPage.js'
 import { Route, Link } from 'react-router-dom';
 import Context from '../ContextManagement/Context.js'
-//import { removeTypeDuplicates } from '@babel/types';
+import InfoPage from '../InfoPage/InfoPage.js'
+import './App.css';
 
 class App extends Component {
 
@@ -64,6 +65,7 @@ class App extends Component {
           </nav>
           <Route exact path='/search' component={SearchPage} />
           <Route exact path='/add' component={AddPage} />
+          <Route exact path ='/' component={InfoPage} />
         </Context.Provider>
       </main>
     );

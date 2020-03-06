@@ -19,6 +19,7 @@ class SearchPage extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
     let searchParam = event.target.searchDB.value
+    searchParam = searchParam.trim().toLowerCase()
     this.context.setSearchPageResults([])
     this.context.setIsLoading(true)
     DatabaseApiService.getSongsFromDatabase(searchParam)
@@ -31,12 +32,14 @@ class SearchPage extends Component {
   render() {
     return (
       <>
+        <h2>Search Database</h2>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="searchDB">Search:</label>
-          <input type="text" id="searchDB" name="searchDB"></input>
-          <input type="submit"></input>
+          <label htmlFor="searchDB" className="upperCase">Search:</label>
+          <input type="text" id="searchDB" name="searchDB" placeholder="Example: 'love'"></input>
+          <input type="submit" value="search"></input>
         </form>
-
+        <hr></hr>
+        
         <table>
           <tbody>
             {this.context.searchPageResults.length > 0 && (
