@@ -128,7 +128,7 @@ class AddPage extends Component {
             <input type="submit" value="Search"></input>
         </form>
         <form onSubmit={this.handleArtistSearch}>
-          <label htmlFor="artists" className="upperCase">Choose an artist:</label>
+          <label htmlFor="artists" className="upperCase">Search by artist:</label>
           <select id="artists" name="artists">
             {this.context.artists.map(this.createArtistSelect)}
           </select>

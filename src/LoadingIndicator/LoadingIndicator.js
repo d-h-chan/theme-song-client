@@ -15,7 +15,7 @@ class LoadingIndicator extends Component {
           color="#00B2FF"
           height={100}
           width={100}
-          timeout={5000} //3 secs
+          timeout={7000} //7 secs
        />
         }
       </>
