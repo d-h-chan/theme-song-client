@@ -1,3 +1,18 @@
+## Theme-Song
+Live app: https://theme-song-app.now.sh/
+
+### Summary:
+Theme-Song is an application that will let the user search for songs by their lyric or theme, created for use by the worship leaders at River of Life Church. Lyrics are sourced via the Genius Lyrics API, and users songs are saved into a postgres db
+
+### Screenshots:
+![Info Screen](https://user-images.githubusercontent.com/55512143/76169301-0ba86380-6134-11ea-988b-266d005fb0aa.png)
+![Game Screen](https://user-images.githubusercontent.com/55512143/76169304-0d722700-6134-11ea-9509-476cbb3d8025.png)
+
+### Technology:
+HTML, CSS, Javascript, React, Enzyme, Node, Cors, Dotenv, Express, Helmet, Morgan, Pg, Xss
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
