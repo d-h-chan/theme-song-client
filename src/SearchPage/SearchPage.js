@@ -39,17 +39,19 @@ class SearchPage extends Component {
           <input type="submit" value="search"></input>
         </form>
         <hr></hr>
-        
+
         <table>
           <tbody>
-            {this.context.searchPageResults.length > 0 && (
+            {(this.context.searchPageResults != null) && (
               <tr>
-              <th>Title</th>
-              <th>Artist</th>
-              <th>Labels</th>
-            </tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Labels</th>
+              </tr>
             )}
-            {this.context.searchPageResults.map(this.createTableRow)}
+            {this.context.searchPageResults != null && (
+              this.context.searchPageResults.map(this.createTableRow)
+            )}
           </tbody>
         </table>
         <LoadingIndicator></LoadingIndicator>

@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without errors 1`] = `
+<Fragment>
+  <h2>
+    Search Database
+  </h2>
+  <form
+    onSubmit={[Function]}
+  >
+    <label
+      className="upperCase"
+      htmlFor="searchDB"
+    >
+      Search:
+    </label>
+    <input
+      id="searchDB"
+      name="searchDB"
+      placeholder="Example: 'love'"
+      type="text"
+    />
+    <input
+      type="submit"
+      value="search"
+    />
+  </form>
+  <hr />
+  <table>
+    <tbody />
+  </table>
+  <LoadingIndicator />
+</Fragment>
+`;

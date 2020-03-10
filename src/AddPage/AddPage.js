@@ -121,22 +121,24 @@ class AddPage extends Component {
   render() {
     return (
       <>
-      <h2>Add from Genius</h2>
+        <h2>Add from Genius</h2>
         <form onSubmit={this.handleSubmitSearch}>
-            <label htmlFor="searchDB" className="upperCase">Open Search:</label>
-            <input type="text" id="searchDB" name="searchDB" placeholder="Example: 'Set a Fire'"></input>
-            <input type="submit" value="Search"></input>
+          <label htmlFor="searchDB" className="upperCase">Open Search:</label>
+          <input type="text" id="searchDB" name="searchDB" placeholder="Example: 'Set a Fire'"></input>
+          <input type="submit" value="Search"></input>
         </form>
         <form onSubmit={this.handleArtistSearch}>
           <label htmlFor="artists" className="upperCase">Search by artist:</label>
           <select id="artists" name="artists">
-            {this.context.artists.map(this.createArtistSelect)}
+            {this.context.artists != null && (
+              this.context.artists.map(this.createArtistSelect)
+            )}
           </select>
           <input type="submit" value="Search"></input>
         </form>
         <hr></hr>
 
-        {this.context.addPageResults.length > 0 && (
+        {this.context.addPageResults != null && (
           <>
             <button onClick={this.handleSubmitToPost}>Add to Database</button>
             <table>

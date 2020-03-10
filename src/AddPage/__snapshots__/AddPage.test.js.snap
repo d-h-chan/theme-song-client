@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without errors 1`] = `
+<Fragment>
+  <h2>
+    Add from Genius
+  </h2>
+  <form
+    onSubmit={[Function]}
+  >
+    <label
+      className="upperCase"
+      htmlFor="searchDB"
+    >
+      Open Search:
+    </label>
+    <input
+      id="searchDB"
+      name="searchDB"
+      placeholder="Example: 'Set a Fire'"
+      type="text"
+    />
+    <input
+      type="submit"
+      value="Search"
+    />
+  </form>
+  <form
+    onSubmit={[Function]}
+  >
+    <label
+      className="upperCase"
+      htmlFor="artists"
+    >
+      Search by artist:
+    </label>
+    <select
+      id="artists"
+      name="artists"
+    />
+    <input
+      type="submit"
+      value="Search"
+    />
+  </form>
+  <hr />
+  <LoadingIndicator />
+</Fragment>
+`;
