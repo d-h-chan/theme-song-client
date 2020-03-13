@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Context from '../ContextManagement/Context.js'
 import DatabaseApiService from '../services/DatabaseApiService'
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator'
+import swal from 'sweetalert';
+
 
 class SearchPage extends Component {
 
@@ -26,6 +28,9 @@ class SearchPage extends Component {
       .then(res => {
         this.context.setIsLoading(false)
         this.context.setSearchPageResults(res)
+        if (res.length === 0) {
+          swal("Error", "No Results Found", "error")
+        }
       })
   }
 

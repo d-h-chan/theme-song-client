@@ -11,7 +11,7 @@ class AddPage extends Component {
   componentDidMount() {
     DatabaseApiService.getArtistsFromDatabase()
       .then(res => {
-        this.context.setArtists(res)
+        this.context.setArtists(res);
       })
   }
 
@@ -33,7 +33,8 @@ class AddPage extends Component {
             id={item.geniusId}
             value={this.context.checkboxState[item.geniusId].themes}
             onChange={this.handleTextChange}
-            disabled={!this.context.checkboxState[item.geniusId].checked}>
+            disabled={!this.context.checkboxState[item.geniusId].checked}
+            maxlength="20">
           </input></td>
       </tr>)
   }
@@ -91,6 +92,9 @@ class AddPage extends Component {
   handleSearch = (results) => {
     this.context.setCheckboxState(this.context.createCheckboxState(results))
     this.context.setAddPageResults(results) //set state
+    if (results.length === 0) {
+      swal("Error", "No Results Found", "error")
+    }
   }
 
   handleSubmitToPost = () => {
