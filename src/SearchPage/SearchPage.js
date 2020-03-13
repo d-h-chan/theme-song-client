@@ -9,6 +9,7 @@ class SearchPage extends Component {
 
   static contextType = Context;
 
+  //creates database search results table, with song titles, artists, and labels 
   createTableRow = (item, index) => {
     return (
       <tr key={index}>
@@ -18,18 +19,19 @@ class SearchPage extends Component {
       </tr>)
   }
 
+  //when search is performed 
   handleSubmit = (event) => {
-    event.preventDefault()
-    let searchParam = event.target.searchDB.value
-    searchParam = searchParam.trim().toLowerCase()
-    this.context.setSearchPageResults([])
-    this.context.setIsLoading(true)
+    event.preventDefault();
+    let searchParam = event.target.searchDB.value;
+    searchParam = searchParam.trim().toLowerCase();
+    this.context.setSearchPageResults([]);
+    this.context.setIsLoading(true);
     DatabaseApiService.getSongsFromDatabase(searchParam)
       .then(res => {
-        this.context.setIsLoading(false)
-        this.context.setSearchPageResults(res)
+        this.context.setIsLoading(false);
+        this.context.setSearchPageResults(res);
         if (res.length === 0) {
-          swal("Error", "No Results Found", "error")
+          swal("Error", "No Results Found", "error");
         }
       })
   }

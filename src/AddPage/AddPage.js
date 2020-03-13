@@ -8,6 +8,7 @@ class AddPage extends Component {
 
   static contextType = Context;
 
+  //start page off with artist dropdown loaded
   componentDidMount() {
     DatabaseApiService.getArtistsFromDatabase()
       .then(res => {
@@ -15,6 +16,7 @@ class AddPage extends Component {
       })
   }
 
+  //create table of song search results, with checkboxes and text inputs
   createAddTableRow = (item, index) => {
     return (
       <tr key={index}>
@@ -39,10 +41,11 @@ class AddPage extends Component {
       </tr>)
   }
 
+  //create dropdown menu of artists
   createArtistSelect = (item, index) => {
     return (
       <option key={index} value={item.id}>{item.name}</option>
-    )
+    );
   }
 
   getTitles = (item) => {
@@ -50,74 +53,82 @@ class AddPage extends Component {
   }
 
   handleCheckboxChange = (event) => {
-    let checkboxState = this.context.checkboxState
-    checkboxState[event.target.id].checked = event.target.checked
-    this.context.setCheckboxState(checkboxState)
+    let checkboxState = this.context.checkboxState;
+    checkboxState[event.target.id].checked = event.target.checked;
+    this.context.setCheckboxState(checkboxState);
   }
 
   handleTextChange = (event) => {
-    let checkboxState = this.context.checkboxState
-    checkboxState[event.target.id].themes = event.target.value
-    this.context.setCheckboxState(checkboxState)
+    let checkboxState = this.context.checkboxState;
+    checkboxState[event.target.id].themes = event.target.value;
+    this.context.setCheckboxState(checkboxState);
   }
 
+  //when open search is clicked,
   handleSubmitSearch = (event) => {
-    event.preventDefault()
-    let searchParam = event.target.searchDB.value
-    this.context.setCheckboxState({})
-    this.context.setAddPageResults([]) //set state
+    event.preventDefault();
+    let searchParam = event.target.searchDB.value;
+    this.context.setCheckboxState({});
+    this.context.setAddPageResults([]);
     this.context.setIsLoading(true)
     DatabaseApiService.searchGeniusBySearch(searchParam)
       .then(results => {
-        this.context.setIsLoading(false)
-        this.handleSearch(results)
+        this.context.setIsLoading(false);
+        this.handleSearch(results);
       })
 
   }
 
+  //when artist dropdown search is clicked,
   handleArtistSearch = (event) => {
-    event.preventDefault()
-    this.context.checkboxState = {}
-    let artist = event.target.artists.value
-    this.context.setCheckboxState({})
-    this.context.setAddPageResults([]) //set state
-    this.context.setIsLoading(true)
+    event.preventDefault();
+    this.context.checkboxState = {};
+    let artist = event.target.artists.value;
+    this.context.setCheckboxState({});
+    this.context.setAddPageResults([]);
+    this.context.setIsLoading(true);
     DatabaseApiService.searchGeniusByArtist(artist)
       .then(results => {
-        this.context.setIsLoading(false)
-        this.handleSearch(results)
+        this.context.setIsLoading(false);
+        this.handleSearch(results);
       })
   }
 
+  //whenever any search is called, update addPageResults state
   handleSearch = (results) => {
-    this.context.setCheckboxState(this.context.createCheckboxState(results))
-    this.context.setAddPageResults(results) //set state
+    this.context.setCheckboxState(this.context.createCheckboxState(results));
+    this.context.setAddPageResults(results);
     if (results.length === 0) {
-      swal("Error", "No Results Found", "error")
+      swal("Error", "No Results Found", "error");
     }
   }
 
+  //when 'add to database' button is clicked
   handleSubmitToPost = () => {
-    const checkboxState = this.context.checkboxState
+    const checkboxState = this.context.checkboxState;
+    //get only songs with checkbox
     const output = this.context.addPageResults.filter(function (result) {
-      return checkboxState[result.geniusId].checked === true
+      return checkboxState[result.geniusId].checked === true;
     });
+    //set the songs' labels from text input
     for (const item of output) {
-      item["themes"] = checkboxState[item.geniusId].themes
+      item["themes"] = checkboxState[item.geniusId].themes;
     }
     if (Array.isArray(output) && output.length) {
-      this.context.setIsLoading(true)
+      this.context.setIsLoading(true);
+      //post results to database
       DatabaseApiService.postToDb(output)
         .then(res => {
+          //get list of artists in case there are any new ones for the dropdown
           DatabaseApiService.getArtistsFromDatabase()
-            .then(this.context.setArtists)
-          this.context.setIsLoading(false)
-          let outputTitles = res.map(this.getTitles)
+            .then(this.context.setArtists);
+          this.context.setIsLoading(false);
+          let outputTitles = res.map(this.getTitles);
           swal("Success!", `Added songs to database: ${outputTitles.join(",")}`, "success");
         });
     }
     else {
-      swal("Warning", "Select at least one song", "warning")
+      swal("Warning", "Select at least one song", "warning");
     }
 
   }

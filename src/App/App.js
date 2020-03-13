@@ -21,23 +21,23 @@ class App extends Component {
   }
 
   setCheckboxState = checkboxState => {
-    this.setState({ checkboxState })
+    this.setState({ checkboxState });
   }
 
   setIsLoading = isLoading => {
-    this.setState({isLoading})
+    this.setState({isLoading});
   }
 
   createCheckboxState = results => {
-    let checkboxState = {}
+    let checkboxState = {};
     results.forEach(function (result) {
-      let id = result.geniusId
+      let id = result.geniusId;
       checkboxState[id] = {
         "checked": false,
         "themes": "",
-      }
+      };
     });
-    return checkboxState
+    return checkboxState;
   }
 
   state = {
